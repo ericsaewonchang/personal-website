@@ -1,6 +1,4 @@
-// src/components/Fun.jsx
 import React, { useState, useEffect } from 'react';
-import { Box, Input, Text } from '@chakra-ui/react';
 
 export default function Fun(props) {
   const [inputValue, setInputValue] = useState('');
@@ -10,7 +8,6 @@ export default function Fun(props) {
     // Simulate fetching data from an API
     const fetchData = async () => {
       try {
-        // Example of fetching data from a placeholder API
         const response = await fetch('https://jsonplaceholder.typicode.com/posts/1');
         const data = await response.json();
         console.log('Fetched data:', data);
@@ -29,24 +26,16 @@ export default function Fun(props) {
   };
 
   return (
-    <Box p={4} textAlign="center">
-      <Text mt={14} fontSize="4xl" fontWeight="bold">
-        Fun
-      </Text>
-      <Input
-        mt={4}
+    <div className="p-4 text-center">
+      <h1 className="mt-14 text-4xl font-bold">Fun</h1>
+      <input
+        className="mt-4 block w-full max-w-lg mx-auto px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+        type="text"
         placeholder="Type something..."
         value={inputValue}
         onChange={handleInputChange}
-        size="lg"
-        variant="outline"
-        width="100%"
-        maxWidth="400px"
-        mx="auto"
       />
-      <Text mt={4} fontSize="2xl" fontWeight="medium">
-        Display: {displayValue}
-      </Text>
-    </Box>
+      <p className="mt-4 text-2xl font-medium">Display: {displayValue}</p>
+    </div>
   );
 }
