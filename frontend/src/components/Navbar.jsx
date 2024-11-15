@@ -1,212 +1,121 @@
-import React from 'react';
-import {
-  Box,
-  Flex,
-  Text,
-  IconButton,
-  Button,
-  Stack,
-  Collapse,
-  Icon,
-  useDisclosure,
-  useColorModeValue,
-  useBreakpointValue,
-} from '@chakra-ui/react';
-import {
-  HamburgerIcon,
-  CloseIcon,
-} from '@chakra-ui/icons';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 const Navbar = () => {
-  const { isOpen, onToggle } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <Box>
-      <Flex
-        as="nav"
-        bg={useColorModeValue('white', 'gray.800')} // Set background to white
-        color="black" // Text color set to black for visibility
-        minH={'60px'}
-        py={{ base: 2 }}
-        px={{ base: 4 }}
-        borderBottom={1}
-        borderStyle={'solid'}
-        borderColor={useColorModeValue('gray.200', 'gray.700')}
-        align={'center'}
-        position="fixed"
-        top={0}
-        left={0}
-        w="100%"
-        zIndex={1000}
-        justify="space-between"
-      >
-        <Flex
-          flex={{ base: 1, md: 'auto' }}
-          display={{ base: 'flex', md: 'none' }}
-        >
-          <IconButton
-            onClick={onToggle}
-            icon={isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />}
-            variant={'ghost'}
-            aria-label={'Toggle Navigation'}
-            color="black" // Button color set to black
-          />
-        </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
-            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
-            fontFamily={'heading'}
-            color={'black'} // Text color set to black
-            fontSize="lg"
-            fontWeight="bold"
-          >
+    <nav className="bg-white fixed top-0 left-0 w-full border-b border-gray-200 z-50">
+      <div className="container mx-auto px-4 py-2 flex items-center justify-between">
+        {/* Logo */}
+        <div className="flex items-center">
+          <RouterLink to="/" className="text-lg font-bold text-black">
             Eric Chang
-          </Text>
+          </RouterLink>
+        </div>
 
-          <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
-            <DesktopNav />
-          </Flex>
-        </Flex>
-
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={'flex-end'}
-          direction={'row'}
-          spacing={6}
-        >
-          <Button as={RouterLink} to="/signin" fontSize={'sm'} fontWeight={400} variant={'link'} color="black">
-            Sign In
-          </Button>
-          <Button
-            as={RouterLink}
-            to="/signup"
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            color={'white'} // Button text color set to white
-            bg={'black'} // Button background color set to black
-            _hover={{
-              bg: 'gray.800', // Darker hover state for better visibility
-            }}
+        {/* Mobile Menu Button */}
+        <div className="md:hidden">
+          <button
+            onClick={handleToggle}
+            className="text-black focus:outline-none"
+            aria-label="Toggle Navigation"
           >
-            Sign Up
-          </Button>
-        </Stack>
-      </Flex>
+            {isOpen ? (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
 
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
-      </Collapse>
-    </Box>
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex space-x-6">
+          <DesktopNav />
+        </div>
+
+        
+      </div>
+
+      {/* Mobile Navigation */}
+      {isOpen && <MobileNav />}
+    </nav>
   );
 };
 
 const DesktopNav = () => {
-  const linkColor = useColorModeValue('black', 'white'); // Link color set to black
-  const linkHoverColor = useColorModeValue('gray.800', 'gray.300'); // Hover color set for better visibility
+  const navItems = [
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
+    { label: 'Projects', href: '/projects' },
+    { label: 'Fun', href: '/fun' },
+  ];
 
   return (
-    <Stack direction={'row'} spacing={4}>
-      <Box>
-        <Box
-          as={RouterLink}
-          p={2}
-          to="/"
-          fontSize={'sm'}
-          fontWeight={500}
-          color={linkColor}
-          _hover={{
-            textDecoration: 'none',
-            color: linkHoverColor,
-          }}
+    <>
+      {navItems.map((item) => (
+        <RouterLink
+          key={item.label}
+          to={item.href}
+          className="text-sm font-medium text-black hover:text-gray-600"
         >
-          Home
-        </Box>
-      </Box>
-      <Box>
-        <Box
-          as={RouterLink}
-          p={2}
-          to="/about"
-          fontSize={'sm'}
-          fontWeight={500}
-          color={linkColor}
-          _hover={{
-            textDecoration: 'none',
-            color: linkHoverColor,
-          }}
-        >
-          About
-        </Box>
-      </Box>
-      <Box>
-        <Box
-          as={RouterLink}
-          p={2}
-          to="/projects"
-          fontSize={'sm'}
-          fontWeight={500}
-          color={linkColor}
-          _hover={{
-            textDecoration: 'none',
-            color: linkHoverColor,
-          }}
-        >
-          Projects
-        </Box>
-      </Box>
-      <Box>
-        <Box
-          as={RouterLink}
-          p={2}
-          to="/fun"
-          fontSize={'sm'}
-          fontWeight={500}
-          color={linkColor}
-          _hover={{
-            textDecoration: 'none',
-            color: linkHoverColor,
-          }}
-        >
-          Fun
-        </Box>
-      </Box>
-    </Stack>
+          {item.label}
+        </RouterLink>
+      ))}
+    </>
   );
 };
 
 const MobileNav = () => {
-  return (
-    <Stack bg={useColorModeValue('white', 'gray.800')} p={4} display={{ md: 'none' }}>
-      <MobileNavItem label="Home" href="/" />
-      <MobileNavItem label="About" href="/about" />
-      <MobileNavItem label="Projects" href="/projects" />
-      <MobileNavItem label="Fun" href="/fun" />
-    </Stack>
-  );
-};
-
-const MobileNavItem = ({ label, href }) => {
-  const { isOpen, onToggle } = useDisclosure();
+  const navItems = [
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
+    { label: 'Projects', href: '/projects' },
+    { label: 'Fun', href: '/fun' },
+  ];
 
   return (
-    <Stack spacing={4} onClick={onToggle}>
-      <Box
-        py={2}
-        as={RouterLink}
-        to={href}
-        justifyContent="space-between"
-        alignItems="center"
-        _hover={{
-          textDecoration: 'none',
-        }}
-      >
-        <Text fontWeight={600} color={useColorModeValue('black', 'white')}>
-          {label}
-        </Text>
-      </Box>
-    </Stack>
+    <div className="bg-white border-t border-gray-200 p-4 md:hidden">
+      {navItems.map((item) => (
+        <RouterLink
+          key={item.label}
+          to={item.href}
+          className="block py-2 text-sm font-medium text-black hover:text-gray-600"
+        >
+          {item.label}
+        </RouterLink>
+      ))}
+    </div>
   );
 };
 

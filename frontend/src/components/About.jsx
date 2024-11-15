@@ -1,46 +1,41 @@
 import React from 'react';
-import { Flex, Box, Image, Text, Card, CardBody, Button } from '@chakra-ui/react';
 
-export default function About(props) {
+export default function About() {
     return (
-        <Flex direction="column" align="center" p={4}>
-            <Card maxW="1000px" w="90%" mt={4} overflow="hidden" align="center">
-                <CardBody>
-                    <Flex align="center" direction={{ base: 'column', md: 'row' }} wrap="wrap">
-                        <Image
+        <div className="flex flex-col items-center p-4">
+            <div className="max-w-4xl w-11/12 mt-20 overflow-hidden rounded-lg shadow-lg border border-gray-200">
+                <div className="p-6">
+                    <div className="flex flex-col md:flex-row md:items-center md:space-x-4">
+                        {/* Image */}
+                        <img
                             src="formywebsite.jpeg" // Replace with your actual image path
                             alt="About Image"
-                            boxSize="200px"
-                            objectFit="cover"
-                            mb={{ base: 4, md: 0 }} // Margin bottom for mobile view
-                            mr={{ base: 0, md: 4 }} // Margin right for desktop view
+                            className="w-48 h-48 object-cover rounded mb-4 md:mb-0"
                         />
-                        <Box textAlign={{ base: 'center', md: 'left' }}>
-                            <Text fontSize="3xl" fontWeight="bold" mb={4}>
-                                My name is Eric Chang
-                            </Text>
-                            <Text fontSize="lg" mb={4}>
+
+                        {/* Text Content */}
+                        <div className="text-center md:text-left">
+                            <h1 className="text-3xl font-bold mb-4">My name is Eric Chang</h1>
+                            <p className="text-lg mb-4">
                                 I'm looking for an internship at a company and I'm a first-year student.
                                 <br /> Getting an internship will give me a huge advantage later on.
-                            </Text>
-                            <Text fontSize="lg" mb={4}>
+                            </p>
+                            <p className="text-lg mb-4">
                                 I really hope I can become successful later on.
-                            </Text>
-                            <Button
-                                as="a"
+                            </p>
+                            {/* LinkedIn Button */}
+                            <a
                                 href="https://www.linkedin.com/in/eric-chang12/" // Replace with your actual LinkedIn profile URL
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                colorScheme="blue"
-                                size="lg"
-                                mt={4}
+                                className="inline-block bg-blue-600 text-white text-lg font-medium py-2 px-4 rounded hover:bg-blue-700"
                             >
                                 Visit My LinkedIn
-                            </Button>
-                        </Box>
-                    </Flex>
-                </CardBody>
-            </Card>
-        </Flex>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }

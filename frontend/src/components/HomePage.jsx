@@ -1,24 +1,15 @@
 import React from 'react';
-import { Flex, Box, Image, Heading } from '@chakra-ui/react';
 
-export default function HomePage(props) {
+export default function HomePage() {
     return (
-        <>
-            
-            <Flex justify="center" mt={10}>
-                <Box>
-                    <Image mt={10}
-
-                        src="formywebsite.jpeg" 
-                        alt="Website Image"
-                        maxW="600px"
-                        w="100%"
-                        h="auto"
-                        borderRadius="md"
-                        shadow="md"
-                    />
-                </Box>
-            </Flex>
-        </>
+        <div className="flex justify-center mt-10">
+            <div>
+                <img
+                    className="mt-10 w-full max-w-3xl h-auto rounded-md shadow-md"
+                    src="formywebsite.jpeg"
+                    alt="Website Image"
+                />
+            </div>
+        </div>
     );
 }
